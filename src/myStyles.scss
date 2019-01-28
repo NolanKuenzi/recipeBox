@@ -1,0 +1,147 @@
+body {
+  background-color: gray;
+}
+
+h1 {
+  text-align: center;
+  text-decoration: underline;
+}
+
+#listContent {
+  background-color: brown;
+  background-color: #803300;
+  width: 75%;
+  height: 8em;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: auto;
+  border: 0.2em solid black;
+}
+
+.listItem {
+  list-style-type: none;
+  cursor: pointer;
+  position: relative;
+  right: 1em;
+  background-color: brown;
+  background-color: #803300;
+}
+
+#recipeSectionHeader {
+  display: flex;
+  justify-content: row;
+  width: 75%;
+  height: 3em;
+  background-color: brown;
+  background-color: #803300;
+  margin-left: auto;
+  margin-right: auto;
+  border: 0.2em solid black;
+  border-top: 0.1em;
+  overflow: auto;
+}
+
+#RSH_Header {
+  position: relative;
+  bottom: 0.5em;
+  margin-left: 0.2em;
+}
+
+button:active {
+  background-color: teal;
+  background-color: #00b386;
+  color: white;
+  box-shadow: none;
+  transform: translateY(.4em);
+  outline: none !important;
+}
+
+.editDelAddBtns {
+  height: 3em;
+  width: 6.5em;
+  margin-left: 1em;
+  margin-top: 0.5em;
+  cursor: pointer;
+  color: teal;
+  background-color: #00b386;
+  color: white;
+  outline: none !important;
+}
+
+#recipeSection {
+  width: 75%;
+  height: 25em;
+  background-color: brown;
+  background-color: #803300;
+  margin-left: auto;
+  margin-right: auto;
+  border: 0.2em solid black;
+  border-top: 0.1em;
+  border-bottom: 0.1em;
+  overflow: auto;
+}
+
+#recipeSectionFooter {
+  display: flex;
+  justify-content: row;
+  width: 75%;
+  height: 4em;
+  background-color: brown;
+  background-color: #803300;
+  margin-left: auto;
+  margin-right: auto;
+  border: 0.2em solid black;
+  overflow: auto;
+}
+
+#source {
+  padding-top: 1em;
+  margin-left: 1em;
+}
+
+a {
+  color: black;
+}
+
+#recipeDiv {
+  position: absolute;
+  background-color: teal;
+  background-color: #00b386;
+  top: 50%;
+  left: 50%;
+  height: 26em;
+  width: 24em;
+  margin-top: -12em;
+  margin-left: -12em;
+  text-align: center;
+  border: 3px solid white;
+}
+
+#recipeDivInput {
+  height: 1.5em;
+  width: 25em;
+}
+
+.recipeDivClass {
+  height: 6em;
+  width: 25em;
+}
+
+#ingredientsInput {
+  height: 6em;
+  width: 25em; 
+}
+
+#directionsInput {
+  height: 6em;
+  width: 25em; 
+}
+
+#source {
+  overflow: scroll;
+}
+
+#footer {
+  margin-top: 3em;
+  text-align: center;
+}
