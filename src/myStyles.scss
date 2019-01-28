@@ -66,6 +66,7 @@ button:active {
   background-color: #00b386;
   color: white;
   outline: none !important;
+  border: 1px solid white;
 }
 
 #recipeSection {
@@ -97,6 +98,7 @@ button:active {
 #source {
   padding-top: 1em;
   margin-left: 1em;
+  overflow: auto;
 }
 
 a {
@@ -135,10 +137,6 @@ a {
 #directionsInput {
   height: 6em;
   width: 25em; 
-}
-
-#source {
-  overflow: scroll;
 }
 
 #footer {
