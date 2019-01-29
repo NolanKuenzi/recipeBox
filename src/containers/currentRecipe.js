@@ -52,10 +52,22 @@ class CurrentRec extends React.Component {
     return (
       <div id="recipeSectionHeader">
         <h2 id="RSH_Header">{destructProps.currentRecipe}</h2>
-        <button type="button" className="editDelAddBtns" id="edit" onClick={this.edit}>
+        <button
+          type="button"
+          className="editDelAddBtns"
+          id="edit"
+          data-testid="edit"
+          onClick={this.edit}
+        >
           Edit
         </button>
-        <button type="button" className="editDelAddBtns" id="delete" onClick={this.delete}>
+        <button
+          type="button"
+          className="editDelAddBtns"
+          id="delete"
+          data-testid="delete"
+          onClick={this.delete}
+        >
           Delete
         </button>
       </div>

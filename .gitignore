@@ -24,3 +24,4 @@ coverage
 # misc
 .DS_Store
 /altApis
+src/components/recipeSection.spec.js

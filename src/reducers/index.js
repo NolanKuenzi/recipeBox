@@ -17,7 +17,7 @@ const setRecipeArray = (function() {
     recipeArray = JSON.parse(window.localStorage.getItem("recipeArr"));
   }
 })();
-
+const egg ='egg';
 const initialState = {
   listItems: recipeArray.length > 0 ? recipeArray.map(item => item.Name) : [],
   currentRecipe: recipeArray.length > 0 ? recipeArray[0].Name : '',
@@ -56,3 +56,4 @@ function rootReducer(state = initialState, action) {
 }
 
 export default rootReducer;
+export { recipeArray, initialState };
