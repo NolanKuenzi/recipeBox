@@ -28,9 +28,10 @@ const RecSec = ({ Ingredients, Directions, Modify }) => {
           {Ingredients === null
             ? null
             : Ingredients.split('*').map(item => (
-                <li key={item} className="ingredientsItem">
-                  {item}
-                </li>))}
+              <li key={item} className="ingredientsItem" data-testid="recSecIngredients">
+                {item}
+              </li>
+            ))}
         </ul>
       </div>
       <div>
@@ -39,14 +40,13 @@ const RecSec = ({ Ingredients, Directions, Modify }) => {
           {Directions === null
             ? null
             : Directions.split('*').map(item => (
-              <li key={item} className="ingredientsItem">
+              <li key={item} className="ingredientsItem" data-testid="recSecDirections">
                 {item}
-              </li>))}
+              </li>
+            ))}
         </ol>
       </div>
-      <div>
-        {Modify === true ? <AddEditRecipes /> : null}
-      </div>
+      <div data-testid="recSecModify">{Modify === true ? <AddEditRecipes /> : null}</div>
     </div>
   );
 };
@@ -59,4 +59,5 @@ RecSec.propTypes = {
 
 const RecipeSection = connect(mapStateToProps)(RecSec);
 
+export { RecSec };
 export default RecipeSection;

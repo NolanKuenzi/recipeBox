@@ -62,6 +62,7 @@ class RecList extends React.Component {
                 key={item}
                 className="listItem"
                 id={item}
+                data-testid="recipeListItem"
                 onClick={this.itemClick}
                 role="presentation"
               >
@@ -79,5 +80,6 @@ RecList.propTypes = {
   listItems: PropTypes.array,
 };
 
+export { RecList };
 const RecipeList = connect(mapStateToProps)(RecList);
 export default RecipeList;
