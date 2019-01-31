@@ -9,7 +9,7 @@ Directions: "Bring the cider to a boil in a small saucepan, then reduce heat and
 {Name: "Spaghetti Squash", Ingredients:"1 small spaghetti squash*1/4 c. Kalamata olives*3 tbsp. Grated Pecorino Romano cheese*2 tbsp. Chopped parsley*1 tbsp. olive oil*2 tsp. red wine vinegar",
 Directions:"Pierce spaghetti squash all over. On plate, microwave squash on High 14 minutes or until tender. Let cool.*Cut squash in half lengthwise; discard seeds. With fork, scrape squash lengthwise; place strands in medium bowl.*Mix in olives, Pecorino Romano, parsley, olive oil, and red wine vinegar."}
 ];
-
+window.localStorage.clear();
 const setRecipeArray = (function() {
   if (JSON.parse(window.localStorage.getItem("recipeArr")) === null) {
     return;
@@ -17,7 +17,7 @@ const setRecipeArray = (function() {
     recipeArray = JSON.parse(window.localStorage.getItem("recipeArr"));
   }
 })();
-const egg ='egg';
+
 const initialState = {
   listItems: recipeArray.length > 0 ? recipeArray.map(item => item.Name) : [],
   currentRecipe: recipeArray.length > 0 ? recipeArray[0].Name : '',
@@ -26,7 +26,7 @@ const initialState = {
   stateRecArr: recipeArray.slice(0),
 };
 
-function rootReducer(state = initialState, action) {
+function RootReducer(state = initialState, action) {
   if (action.type === LIST_ITEMS) {
     return Object.assign({}, state, {
       listItems: action.items,
@@ -55,5 +55,5 @@ function rootReducer(state = initialState, action) {
   return state;
 }
 
-export default rootReducer;
 export { recipeArray, initialState };
+export default RootReducer;
