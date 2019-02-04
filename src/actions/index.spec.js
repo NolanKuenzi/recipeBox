@@ -1,5 +1,12 @@
-import { LIST_ITEMS, CURRENT_RECIPE, EDIT_OR_ADD, MODIFY } from '../constants/action-types';
-import { listItems, currentRecipe, editOrAdd, modify } from './index';
+import {
+  LIST_ITEMS,
+  CURRENT_RECIPE,
+  EDIT_OR_ADD,
+  MODIFY,
+  REC_ARR,
+  DISABLE_BTNS,
+} from '../constants/action-types';
+import { listItems, currentRecipe, editOrAdd, modify, recipeArray, disableBtns } from './index';
 
 describe('Action objects returned from action-creator functions', () => {
   test('listItems creates an action which adds a list item', () => {
@@ -26,12 +33,31 @@ describe('Action objects returned from action-creator functions', () => {
     });
     expect(editOrAdd(editAdd)).toEqual(expectedAction(editAdd));
   });
-  test('modify creats an action which returns a boolean', () => {
+  test('modify creates an action which returns a boolean', () => {
     const mod = false;
     const expectedAction = item => ({
       type: MODIFY,
       item,
     });
     expect(modify(mod)).toEqual(expectedAction(mod));
+  });
+  test('recipeArray creates an action with returns an array of recipes', () => {
+    const recArr = [
+      { Name: 'testName', Ingredientts: 'ranch', directions: 'testDirections' },
+      { Name: 'testName2', Ingredientts: 'ranch', directions: 'testDirections2' },
+    ];
+    const expectedAction = item => ({
+      type: REC_ARR,
+      item,
+    });
+    expect(recipeArray(recArr)).toEqual(expectedAction(recArr));
+  });
+  test('disableBtns creates an action with returns a boolean', () => {
+    const disableButtons = false;
+    const expectedAction = item => ({
+      type: DISABLE_BTNS,
+      item,
+    });
+    expect(disableBtns(disableButtons)).toEqual(expectedAction(disableButtons));
   });
 });

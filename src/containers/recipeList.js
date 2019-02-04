@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { CURRENT_RECIPE } from '../constants/action-types';
+import { currentRecipe } from '../actions/index';
 
 const mapStateToProps = state => {
   return { listItems: state.listItems.slice(0), currentRecipe: state.currentRecipe };
@@ -47,7 +47,7 @@ class RecList extends React.Component {
   itemClick = event => {
     const { ...destructProps } = this.props;
     const newCurrentRec = event.target.id;
-    destructProps.dispatch({ type: CURRENT_RECIPE, item: newCurrentRec });
+    destructProps.dispatch(currentRecipe(newCurrentRec));
     this.BackGround(event.target.id);
   };
 
@@ -55,16 +55,16 @@ class RecList extends React.Component {
     const { ...destructProps } = this.props;
     return (
       <div id="listContent">
-        <ul>
+        <ul data-testid="recipeListUl">
           <h3>
             {destructProps.listItems.map(item => (
               <li
                 key={item}
                 className="listItem"
                 id={item}
-                data-testid="recipeListItem"
                 onClick={this.itemClick}
                 role="presentation"
+                data-testid="recipeListItem"
               >
                 {item}
               </li>
@@ -78,8 +78,8 @@ class RecList extends React.Component {
 
 RecList.propTypes = {
   listItems: PropTypes.array,
+  currentRecipe: PropTypes.string,
 };
 
-export { RecList };
 const RecipeList = connect(mapStateToProps)(RecList);
 export default RecipeList;

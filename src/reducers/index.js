@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { LIST_ITEMS, CURRENT_RECIPE, EDIT_OR_ADD, MODIFY, REC_ARR } from '../constants/action-types';
+import { LIST_ITEMS, CURRENT_RECIPE, EDIT_OR_ADD, MODIFY, REC_ARR, DISABLE_BTNS } from '../constants/action-types';
 
 let recipeArray = [
 {Name: "Asparagus & Potato Pizza", Ingredients: "cornmeal*1 lb. pizza dough*2 medium Yukon gold or other waxy potatoes (about 8 oz)*12 oz. Asparagus*1/2 Red Onion*2 tbsp. olive oil*Kosher salt and pepper*2 oz. thinly sliced provolone cheese (about 6 slices)",
@@ -24,6 +24,7 @@ const initialState = {
   editOrAdd: 'add',
   modify: false,
   stateRecArr: recipeArray.slice(0),
+  disableBtns: false,
 };
 
 function RootReducer(state = initialState, action) {
@@ -50,6 +51,11 @@ function RootReducer(state = initialState, action) {
   if (action.type === REC_ARR) {
     return Object.assign({}, state, {
       stateRecArr: action.item,
+    });
+  }
+  if (action.type === DISABLE_BTNS) {
+    return Object.assign({}, state, {
+      disableBtns: action.item, 
     });
   }
   return state;

@@ -24,7 +24,7 @@ const RecSec = ({ Ingredients, Directions, Modify }) => {
     <div id="recipeSection">
       <div>
         <h3>Ingredients:</h3>
-        <ul>
+        <ul data-testid='ingredientsSec'>
           {Ingredients === null
             ? null
             : Ingredients.split('*').map(item => (
@@ -36,7 +36,7 @@ const RecSec = ({ Ingredients, Directions, Modify }) => {
       </div>
       <div>
         <h3>Directions:</h3>
-        <ol>
+        <ol data-testid='directionsSec'>
           {Directions === null
             ? null
             : Directions.split('*').map(item => (

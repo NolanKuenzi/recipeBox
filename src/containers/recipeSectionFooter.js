@@ -1,25 +1,34 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { EDIT_OR_ADD, MODIFY } from '../constants/action-types';
+import { editOrAdd, modify } from '../actions/index';
 
-const mapStateToProps = ({ dispatch }) => {
+const mapStateToProps = state => {
   return {
-    dispatch,
+    disableBtns: state.disableBtns,
   };
 };
 class RecSectionFooter extends React.Component {
   addRecipe = () => {
     const { ...destructProps } = this.props;
-    destructProps.dispatch({ type: EDIT_OR_ADD, item: 'add' });
-    destructProps.dispatch({ type: MODIFY, item: true });
+    if (destructProps.disableBtns === true) {
+      return;
+    }
+    destructProps.dispatch(editOrAdd('add'));
+    destructProps.dispatch(modify(true));
   };
 
   render() {
     return (
       <div id="recipeSectionFooter">
         <div>
-          <button type="button" className="editDelAddBtns" id="add" onClick={this.addRecipe}>
+          <button
+            type="button"
+            className="editDelAddBtns"
+            id="add"
+            data-testid="add"
+            onClick={this.addRecipe}
+          >
             Add Recipe
           </button>
         </div>

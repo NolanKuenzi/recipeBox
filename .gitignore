@@ -24,5 +24,3 @@ coverage
 # misc
 .DS_Store
 /altApis
-/src/containers/containers.spec.js
-/src/containers/recipeSectionFooter.spec.js

@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { LIST_ITEMS, CURRENT_RECIPE, MODIFY, REC_ARR } from '../constants/action-types';
+import { listItems, currentRecipe, modify, recipeArray, disableBtns } from '../actions/index';
 
 const mapStateToProps = state => {
   const getIngredients = state.stateRecArr
@@ -23,49 +23,77 @@ const mapStateToProps = state => {
 };
 
 class AddOrEditRecipes extends React.Component {
-  componentWillUnmount() {
-    const recipeInput = document.getElementById('recipeDivInput');
-    const ingredientsInput = document.getElementById('ingredientsInput');
-    const directionsInput = document.getElementById('directionsInput');
-    recipeInput.value = '';
-    ingredientsInput.value = '';
-    directionsInput.value = '';
-    this.addButton();
+  constructor(props) {
+    super(props);
+    const { ...destructProps } = this.props;
+    this.state = {
+      localCurrentRec: destructProps.editOrAdd === 'add' ? '' : destructProps.currentRecipe,
+      localIngredients: destructProps.editOrAdd === 'add' ? '' : destructProps.ingredients,
+      localDirections: destructProps.editOrAdd === 'add' ? '' : destructProps.directions,
+    };
   }
 
+  componentDidMount() {
+    this.disableBtns(true);
+  }
+
+  componentWillUnmount() {
+    this.disableBtns(false);
+  }
+
+  changeFunc = input => {
+    if (input.target.id === 'recipeDivInput') {
+      this.setState({
+        localCurrentRec: input.target.value,
+      });
+    }
+    if (input.target.id === 'ingredientsInput') {
+      this.setState({
+        localIngredients: input.target.value,
+      });
+    }
+    if (input.target.id === 'directionsInput') {
+      this.setState({
+        localDirections: input.target.value,
+      });
+    }
+  };
+
   finish = () => {
-    const recipeInput = document.getElementById('recipeDivInput');
-    const ingredientsInput = document.getElementById('ingredientsInput');
-    const directionsInput = document.getElementById('directionsInput');
-    if (recipeInput.value === '' || ingredientsInput.value === '' || directionsInput.value === '') {
+    const { ...destructProps } = this.props;
+    const { ...destructState } = this.state;
+    const regX = /\S/;
+    if (
+      destructState.localCurrentRec.match(regX) === null ||
+      destructState.localIngredients.match(regX) === null ||
+      destructState.localDirections.match(regX) === null
+    ) {
       alert('Please Complete Recipe Form');
       return;
     }
-    const { ...destructProps } = this.props;
-    const update = (listItems, currentRec, RecArr) => {
-      destructProps.dispatch({ type: LIST_ITEMS, items: listItems });
-      destructProps.dispatch({ type: CURRENT_RECIPE, item: currentRec });
-      destructProps.dispatch({ type: REC_ARR, item: RecArr });
+    const update = (updateListItems, updateCurrentRec, updateRecArr) => {
+      destructProps.dispatch(listItems(updateListItems));
+      destructProps.dispatch(currentRecipe(updateCurrentRec));
+      destructProps.dispatch(recipeArray(updateRecArr));
       this.cancel();
     };
-
     if (destructProps.editOrAdd === 'add') {
       if (destructProps.listItems.length === 8) {
         alert('Maximum amount of recipes has been reached.');
         return;
       }
-      if (destructProps.listItems.some(item => item === recipeInput.value) === true) {
+      if (destructProps.listItems.some(item => item === destructState.localCurrentRec.trim()) === true) {
         alert('Cannot have duplicate names of recipes');
         return;
       }
       const newListItems = destructProps.listItems.slice(0);
-      newListItems.push(recipeInput.value);
-      const newCurrentRecipe = newListItems[newListItems.length-1];
+      newListItems.push(destructState.localCurrentRec);
+      const newCurrentRecipe = newListItems[newListItems.length - 1];
       const newRecipeArray = destructProps.stateRecArr.slice(0);
       newRecipeArray.push({
-        Name: recipeInput.value,
-        Ingredients: ingredientsInput.value,
-        Directions: directionsInput.value,
+        Name: destructState.localCurrentRec,
+        Ingredients: destructState.localIngredients,
+        Directions: destructState.localDirections,
       });
       update(newListItems.slice(0), newCurrentRecipe, newRecipeArray.slice(0));
       window.localStorage.setItem('recipeArr', JSON.stringify(newRecipeArray.slice(0)));
@@ -74,19 +102,19 @@ class AddOrEditRecipes extends React.Component {
       const duplicateRecName = destructProps.listItems
         .slice(0)
         .filter(item => item !== destructProps.currentRecipe);
-      if (duplicateRecName.some(item => item === recipeInput.value) === true) {
+      if (duplicateRecName.some(item => item === destructState.localCurrentRec) === true) {
         alert('Cannot have duplicate names of recipes');
         return;
-      }
+      } 
       const newListItems = destructProps.listItems.slice(0);
-      newListItems[newListItems.indexOf(destructProps.currentRecipe)] = recipeInput.value;
-      const newCurrentRecipe = newListItems[newListItems.indexOf(recipeInput.value)];
+      newListItems[newListItems.indexOf(destructProps.currentRecipe)] = destructState.localCurrentRec;
+      const newCurrentRecipe = newListItems[newListItems.indexOf(destructState.localCurrentRec)];
       const newRecipeArray = destructProps.stateRecArr.slice(0);
       for (let i = 0; i < newRecipeArray.length; i++) {
         if (newRecipeArray[i].Name === destructProps.currentRecipe) {
-          newRecipeArray[i].Name = recipeInput.value;
-          newRecipeArray[i].Ingredients = ingredientsInput.value;
-          newRecipeArray[i].Directions = directionsInput.value;
+          newRecipeArray[i].Name = destructState.localCurrentRec;
+          newRecipeArray[i].Ingredients = destructState.localIngredients;
+          newRecipeArray[i].Directions = destructState.localDirections;
           update(newListItems.slice(0), newCurrentRecipe, newRecipeArray.slice(0));
           window.localStorage.setItem('recipeArr', JSON.stringify(newRecipeArray.slice(0)));
           return;
@@ -97,12 +125,12 @@ class AddOrEditRecipes extends React.Component {
 
   cancel = () => {
     const { ...destructProps } = this.props;
-    destructProps.dispatch({ type: MODIFY, item: false });
+    destructProps.dispatch(modify(false));
   };
 
-  addButton = () => {
-    const disableAddButton = document.getElementById('add');
-    disableAddButton.disabled = false;
+  disableBtns = input => {
+    const { ...destructProps } = this.props;
+    destructProps.dispatch(disableBtns(input));
   };
 
   render() {
@@ -110,7 +138,9 @@ class AddOrEditRecipes extends React.Component {
     return (
       <div id="recipeDiv">
         <div>
-          <h3>{destructProps.editOrAdd === 'add' ? 'Add a Recipe' : 'Edit Recipe'}</h3>
+          <h3 data-testid="addEditHeader">
+            {destructProps.editOrAdd === 'add' ? 'Add a Recipe' : 'Edit Recipe'}
+          </h3>
         </div>
         <div id="inputs">
           <p>Recipe:</p>
@@ -118,27 +148,33 @@ class AddOrEditRecipes extends React.Component {
             type="text"
             className="recipeDivClass"
             id="recipeDivInput"
-            defaultValue={destructProps.editOrAdd === 'add' ? null : destructProps.currentRecipe}
+            data-testid="recipeName"
+            defaultValue={destructProps.editOrAdd === 'add' ? '' : destructProps.currentRecipe}
             placeholder="Recipe Name"
+            onChange={this.changeFunc}
           />
           <p>Ingredients:</p>
           <textarea
             type="text"
             className="recipeDivClass"
+            data-testid="recipeIngredients"
             id="ingredientsInput"
-            defaultValue={destructProps.editOrAdd === 'add' ? null : destructProps.ingredients}
+            defaultValue={destructProps.editOrAdd === 'add' ? '' : destructProps.ingredients}
             placeholder="Seperate each ingredient with a *"
+            onChange={this.changeFunc}
           />
           <p>Directions:</p>
           <textarea
             type="text"
             className="recipeDivClass"
+            data-testid="recipeDirections"
             id="directionsInput"
-            defaultValue={destructProps.editOrAdd === 'add' ? null : destructProps.directions}
+            defaultValue={destructProps.editOrAdd === 'add' ? '' : destructProps.directions}
             placeholder="Seperate each direction with a *"
+            onChange={this.changeFunc}
           />
           <br />
-          <button type="button" onClick={this.finish}>
+          <button type="button" data-testid="finishButton" onClick={this.finish}>
             Finish
           </button>
           <button type="button" onClick={this.cancel}>
@@ -159,5 +195,4 @@ AddOrEditRecipes.propTypes = {
 };
 
 const AddEditRecipes = connect(mapStateToProps)(AddOrEditRecipes);
-
 export default AddEditRecipes;

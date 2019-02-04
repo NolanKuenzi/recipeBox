@@ -1,4 +1,11 @@
-import { LIST_ITEMS, CURRENT_RECIPE, EDIT_OR_ADD, MODIFY } from '../constants/action-types';
+import {
+  LIST_ITEMS,
+  CURRENT_RECIPE,
+  EDIT_OR_ADD,
+  MODIFY,
+  REC_ARR,
+  DISABLE_BTNS,
+} from '../constants/action-types';
 
 export const listItems = items => ({
   type: LIST_ITEMS,
@@ -17,5 +24,15 @@ export const editOrAdd = item => ({
 
 export const modify = item => ({
   type: MODIFY,
+  item,
+});
+
+export const recipeArray = item => ({
+  type: REC_ARR,
+  item,
+});
+
+export const disableBtns = item => ({
+  type: DISABLE_BTNS,
   item,
 });

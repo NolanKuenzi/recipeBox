@@ -6,6 +6,7 @@ import {
   EDIT_OR_ADD,
   MODIFY,
   REC_ARR,
+  DISABLE_BTNS,
 } from '../constants/action-types';
 import { recipeArray, initialState } from './index';
 
@@ -22,6 +23,7 @@ describe('rootReducer', () => {
       editOrAdd: 'add',
       modify: false,
       stateRecArr: recipeArray.slice(0),
+      disableBtns: false,
     });
   });
   it('should handle CURRENT_RECIPE', () => {
@@ -33,6 +35,7 @@ describe('rootReducer', () => {
       editOrAdd: 'add',
       modify: false,
       stateRecArr: recipeArray.slice(0),
+      disableBtns: false,
     });
   });
   it('should handle EDIT_OR_ADD', () => {
@@ -43,6 +46,7 @@ describe('rootReducer', () => {
       editOrAdd: 'edit',
       modify: false,
       stateRecArr: recipeArray.slice(0),
+      disableBtns: false,
     });
   });
   it('should handle MODIFY', () => {
@@ -53,6 +57,7 @@ describe('rootReducer', () => {
       editOrAdd: 'add',
       modify: true,
       stateRecArr: recipeArray.slice(0),
+      disableBtns: false,
     });
   });
   it('should handle REC_ARR', () => {
@@ -64,6 +69,19 @@ describe('rootReducer', () => {
       editOrAdd: 'add',
       modify: false,
       stateRecArr: recArr,
+      disableBtns: false,
+    });
+  });
+  it('should handle  DISABLE_BTNS', () => {
+    const disableButtons = true;
+    const action = { type: DISABLE_BTNS, item: disableButtons };
+    expect(rootReducer(undefined, action)).toEqual({
+      listItems: recipeArray.length > 0 ? recipeArray.map(item => item.Name) : [],
+      currentRecipe: recipeArray.length > 0 ? recipeArray[0].Name : '',
+      editOrAdd: 'add',
+      modify: false,
+      stateRecArr: recipeArray.slice(0),
+      disableBtns: disableButtons,
     });
   });
 });
