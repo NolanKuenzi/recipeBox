@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { LIST_ITEMS, CURRENT_RECIPE, EDIT_OR_ADD, MODIFY, REC_ARR, DISABLE_BTNS } from '../constants/action-types';
+import { LIST_ITEMS, CURRENT_RECIPE, EDIT_OR_ADD, MODIFY, STATE_REC_ARR, DISABLE_BTNS } from '../constants/action-types';
 
 let recipeArray = [
 {Name: "Asparagus & Potato Pizza", Ingredients: "cornmeal*1 lb. pizza dough*2 medium Yukon gold or other waxy potatoes (about 8 oz)*12 oz. Asparagus*1/2 Red Onion*2 tbsp. olive oil*Kosher salt and pepper*2 oz. thinly sliced provolone cheese (about 6 slices)",
@@ -9,7 +9,7 @@ Directions: "Bring the cider to a boil in a small saucepan, then reduce heat and
 {Name: "Spaghetti Squash", Ingredients:"1 small spaghetti squash*1/4 c. Kalamata olives*3 tbsp. Grated Pecorino Romano cheese*2 tbsp. Chopped parsley*1 tbsp. olive oil*2 tsp. red wine vinegar",
 Directions:"Pierce spaghetti squash all over. On plate, microwave squash on High 14 minutes or until tender. Let cool.*Cut squash in half lengthwise; discard seeds. With fork, scrape squash lengthwise; place strands in medium bowl.*Mix in olives, Pecorino Romano, parsley, olive oil, and red wine vinegar."}
 ];
-window.localStorage.clear();
+
 const setRecipeArray = (function() {
   if (JSON.parse(window.localStorage.getItem("recipeArr")) === null) {
     return;
@@ -23,7 +23,7 @@ const initialState = {
   currentRecipe: recipeArray.length > 0 ? recipeArray[0].Name : '',
   editOrAdd: 'add',
   modify: false,
-  stateRecArr: recipeArray.slice(0),
+  stateRecipeArray: recipeArray.slice(0),
   disableBtns: false,
 };
 
@@ -48,9 +48,9 @@ function RootReducer(state = initialState, action) {
       modify: action.item,
     });
   }
-  if (action.type === REC_ARR) {
+  if (action.type === STATE_REC_ARR) {
     return Object.assign({}, state, {
-      stateRecArr: action.item,
+      stateRecipeArray: action.item,
     });
   }
   if (action.type === DISABLE_BTNS) {

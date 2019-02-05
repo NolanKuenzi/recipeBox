@@ -8,47 +8,10 @@ const mapStateToProps = state => {
 };
 
 class RecList extends React.Component {
-  componentDidMount() {
-    const { ...destructProps } = this.props;
-    if (destructProps.currentRecipe === '') {
-      return;
-    }
-    this.BackGround(destructProps.currentRecipe);
-  }
-
-  componentDidUpdate() {
-    const { ...destructProps } = this.props;
-    if (destructProps.currentRecipe === '' || destructProps.currentRecipe === undefined) {
-      return;
-    }
-    this.BackGround(destructProps.currentRecipe);
-  }
-
-  componentWillUnmount() {
-    this.BackGround(null);
-  }
-
-  BackGround = input => {
-    const ulBg = document.getElementsByClassName('listItem');
-    for (let i = 0; i < ulBg.length; i++) {
-      ulBg[i].style.backgroundColor = '#803300';
-      ulBg[i].style.border = 'thin solid #803300';
-    }
-    if (input === null) {
-      return;
-    }
-    const currentRecBgColor = document.getElementById(input);
-    if (currentRecBgColor.style.backgroundColor !== 'rgb(0, 179, 134)') {
-      currentRecBgColor.style.backgroundColor = 'rgb(0, 179, 134)';
-      currentRecBgColor.style.border = 'thin solid white';
-    }
-  };
-
   itemClick = event => {
     const { ...destructProps } = this.props;
     const newCurrentRec = event.target.id;
     destructProps.dispatch(currentRecipe(newCurrentRec));
-    this.BackGround(event.target.id);
   };
 
   render() {
@@ -65,6 +28,11 @@ class RecList extends React.Component {
                 onClick={this.itemClick}
                 role="presentation"
                 data-testid="recipeListItem"
+                style={
+                  destructProps.currentRecipe === item
+                    ? { backgroundColor: 'rgb(0, 179, 134)', border: 'thin solid white' }
+                    : { backgroundColor: 'rgb(128,51,0)', border: 'rgb(128,51,0)' }
+                }
               >
                 {item}
               </li>

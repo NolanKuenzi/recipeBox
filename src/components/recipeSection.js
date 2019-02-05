@@ -5,10 +5,10 @@ import { connect } from 'react-redux';
 import AddEditRecipes from '../containers/add_EditRecipes';
 
 const mapStateToProps = state => {
-  const getIngredients = state.stateRecArr
+  const getIngredients = state.stateRecipeArray
     .slice(0)
     .filter(item => item.Name === state.currentRecipe);
-  const getDirections = state.stateRecArr
+  const getDirections = state.stateRecipeArray
     .slice(0)
     .filter(item => item.Name === state.currentRecipe);
 

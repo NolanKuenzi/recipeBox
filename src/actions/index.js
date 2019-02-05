@@ -3,7 +3,7 @@ import {
   CURRENT_RECIPE,
   EDIT_OR_ADD,
   MODIFY,
-  REC_ARR,
+  STATE_REC_ARR,
   DISABLE_BTNS,
 } from '../constants/action-types';
 
@@ -27,8 +27,8 @@ export const modify = item => ({
   item,
 });
 
-export const recipeArray = item => ({
-  type: REC_ARR,
+export const stateRecipeArray = item => ({
+  type: STATE_REC_ARR,
   item,
 });
 

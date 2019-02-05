@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { listItems, currentRecipe, editOrAdd, modify, recipeArray } from '../actions/index';
+import { listItems, currentRecipe, editOrAdd, modify, stateRecipeArray } from '../actions/index';
 
 const mapStateToProps = state => {
   return {
     listItems: state.listItems,
     currentRecipe: state.currentRecipe,
-    stateRecArr: state.stateRecArr,
+    stateRecipeArray: state.stateRecipeArray,
     disableBtns: state.disableBtns,
   };
 };
@@ -36,13 +36,12 @@ class CurrentRec extends React.Component {
     const deleteRecipe = destructProps.listItems.filter(
       item => item !== destructProps.currentRecipe,
     );
-    const newRecipeArray = destructProps.stateRecArr.filter(
+    const newRecipeArray = destructProps.stateRecipeArray.filter(
       item => item.Name !== destructProps.currentRecipe,
     );
-    window.localStorage.setItem('recipeArr', JSON.stringify(destructProps.stateRecArr.slice(0)));
     destructProps.dispatch(listItems(deleteRecipe));
     destructProps.dispatch(currentRecipe(deleteRecipe[0]));
-    destructProps.dispatch(recipeArray(newRecipeArray.slice(0)));
+    destructProps.dispatch(stateRecipeArray(newRecipeArray.slice(0)));
     window.localStorage.setItem('recipeArr', JSON.stringify(newRecipeArray.slice(0)));
   };
 

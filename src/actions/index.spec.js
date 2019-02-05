@@ -3,10 +3,17 @@ import {
   CURRENT_RECIPE,
   EDIT_OR_ADD,
   MODIFY,
-  REC_ARR,
+  STATE_REC_ARR,
   DISABLE_BTNS,
 } from '../constants/action-types';
-import { listItems, currentRecipe, editOrAdd, modify, recipeArray, disableBtns } from './index';
+import {
+  listItems,
+  currentRecipe,
+  editOrAdd,
+  modify,
+  stateRecipeArray,
+  disableBtns,
+} from './index';
 
 describe('Action objects returned from action-creator functions', () => {
   test('listItems creates an action which adds a list item', () => {
@@ -47,10 +54,10 @@ describe('Action objects returned from action-creator functions', () => {
       { Name: 'testName2', Ingredientts: 'ranch', directions: 'testDirections2' },
     ];
     const expectedAction = item => ({
-      type: REC_ARR,
+      type: STATE_REC_ARR,
       item,
     });
-    expect(recipeArray(recArr)).toEqual(expectedAction(recArr));
+    expect(stateRecipeArray(recArr)).toEqual(expectedAction(recArr));
   });
   test('disableBtns creates an action with returns a boolean', () => {
     const disableButtons = false;

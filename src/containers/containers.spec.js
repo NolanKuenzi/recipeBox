@@ -68,8 +68,8 @@ describe('<CurrentRecipe component />', () => {
     expect(recSec.textContent).toContain('1 lb. pizza dough');
     expect(recSec.textContent).toContain('Heat oven to 425°F. Dust a baking sheet with cornmeal.');
   });
-  test(`Editing the current recipe will update RecipeList, CurrentRecipe, 
-  and RecipeSection components`, () => {
+  test(`Editing the current recipe will update the RecipeList, CurrentRecipe, 
+  RecipeSection components and localStorage`, () => {
     const { getByTestId } = RenderComponent();
     const editButton = getByTestId('edit');
     fireEvent.click(editButton);
@@ -91,6 +91,9 @@ describe('<CurrentRecipe component />', () => {
     expect(currentRecName.textContent).toBe('Asparagus & Carrot Pizza');
     expect(ingredientsSecion.textContent).toContain('12 Carrots');
     expect(directionsSection.textContent).toContain('Chop the carrots up into tiny squares');
+    expect(global.localStorage.recipeArr).toContain('Asparagus & Carrot Pizza');
+    expect(global.localStorage.recipeArr).toContain('12 Carrots');
+    expect(global.localStorage.recipeArr).toContain('Chop the carrots up into tiny squares');
   });
 });
 describe('<RecipeSectionFooter />', () => {
@@ -105,8 +108,8 @@ describe('<RecipeSectionFooter />', () => {
     expect(directionsSection.textContent).toBe('');
   });
 
-  test(`Adding a recipe will update RecipeList, CurrentRecipe, 
-  and RecipeSection components`, () => {
+  test(`Adding a recipe will update the RecipeList, CurrentRecipe, RecipeSection 
+  components and localStorage`, () => {
     const { getByTestId } = RenderComponent();
     const addButton = getByTestId('add');
     fireEvent.click(addButton);
@@ -126,5 +129,8 @@ describe('<RecipeSectionFooter />', () => {
     expect(currentRecName.textContent).toBe('Egg Salad Sandwhich');
     expect(ingredientsSecion.textContent).toContain('Eggs and Mayo');
     expect(directionsSection.textContent).toContain('Mix in bowl then place on bread');
+    expect(global.localStorage.recipeArr).toContain('Egg Salad Sandwhich');
+    expect(global.localStorage.recipeArr).toContain('Eggs and Mayo');
+    expect(global.localStorage.recipeArr).toContain('Mix in bowl then place on bread');
   });
 });

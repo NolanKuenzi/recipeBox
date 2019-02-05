@@ -2,13 +2,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { listItems, currentRecipe, modify, recipeArray, disableBtns } from '../actions/index';
+import { listItems, currentRecipe, modify, stateRecipeArray, disableBtns } from '../actions/index';
 
 const mapStateToProps = state => {
-  const getIngredients = state.stateRecArr
+  const getIngredients = state.stateRecipeArray
     .slice(0)
     .filter(item => item.Name === state.currentRecipe);
-  const getDirections = state.stateRecArr
+  const getDirections = state.stateRecipeArray
     .slice(0)
     .filter(item => item.Name === state.currentRecipe);
   return {
@@ -18,7 +18,7 @@ const mapStateToProps = state => {
     ingredients: getIngredients.length === 0 ? null : getIngredients[0].Ingredients,
     directions: getDirections.length === 0 ? null : getDirections[0].Directions,
     modify: state.modify,
-    stateRecArr: state.stateRecArr,
+    stateRecipeArray: state.stateRecipeArray,
   };
 };
 
@@ -71,10 +71,10 @@ class AddOrEditRecipes extends React.Component {
       alert('Please Complete Recipe Form');
       return;
     }
-    const update = (updateListItems, updateCurrentRec, updateRecArr) => {
+    const update = (updateListItems, updateCurrentRec, updateStateRecArr) => {
       destructProps.dispatch(listItems(updateListItems));
       destructProps.dispatch(currentRecipe(updateCurrentRec));
-      destructProps.dispatch(recipeArray(updateRecArr));
+      destructProps.dispatch(stateRecipeArray(updateStateRecArr));
       this.cancel();
     };
     if (destructProps.editOrAdd === 'add') {
@@ -89,7 +89,7 @@ class AddOrEditRecipes extends React.Component {
       const newListItems = destructProps.listItems.slice(0);
       newListItems.push(destructState.localCurrentRec);
       const newCurrentRecipe = newListItems[newListItems.length - 1];
-      const newRecipeArray = destructProps.stateRecArr.slice(0);
+      const newRecipeArray = destructProps.stateRecipeArray.slice(0);
       newRecipeArray.push({
         Name: destructState.localCurrentRec,
         Ingredients: destructState.localIngredients,
@@ -102,14 +102,14 @@ class AddOrEditRecipes extends React.Component {
       const duplicateRecName = destructProps.listItems
         .slice(0)
         .filter(item => item !== destructProps.currentRecipe);
-      if (duplicateRecName.some(item => item === destructState.localCurrentRec) === true) {
+      if (duplicateRecName.some(item => item === destructState.localCurrentRec.trim()) === true) {
         alert('Cannot have duplicate names of recipes');
         return;
       } 
       const newListItems = destructProps.listItems.slice(0);
       newListItems[newListItems.indexOf(destructProps.currentRecipe)] = destructState.localCurrentRec;
       const newCurrentRecipe = newListItems[newListItems.indexOf(destructState.localCurrentRec)];
-      const newRecipeArray = destructProps.stateRecArr.slice(0);
+      const newRecipeArray = destructProps.stateRecipeArray.slice(0);
       for (let i = 0; i < newRecipeArray.length; i++) {
         if (newRecipeArray[i].Name === destructProps.currentRecipe) {
           newRecipeArray[i].Name = destructState.localCurrentRec;

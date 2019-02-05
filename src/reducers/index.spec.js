@@ -5,7 +5,7 @@ import {
   CURRENT_RECIPE,
   EDIT_OR_ADD,
   MODIFY,
-  REC_ARR,
+  STATE_REC_ARR,
   DISABLE_BTNS,
 } from '../constants/action-types';
 import { recipeArray, initialState } from './index';
@@ -22,7 +22,7 @@ describe('rootReducer', () => {
       currentRecipe: recipeArray.length > 0 ? recipeArray[0].Name : '',
       editOrAdd: 'add',
       modify: false,
-      stateRecArr: recipeArray.slice(0),
+      stateRecipeArray: recipeArray.slice(0),
       disableBtns: false,
     });
   });
@@ -34,7 +34,7 @@ describe('rootReducer', () => {
       currentRecipe: currentRec,
       editOrAdd: 'add',
       modify: false,
-      stateRecArr: recipeArray.slice(0),
+      stateRecipeArray: recipeArray.slice(0),
       disableBtns: false,
     });
   });
@@ -45,7 +45,7 @@ describe('rootReducer', () => {
       currentRecipe: recipeArray.length > 0 ? recipeArray[0].Name : '',
       editOrAdd: 'edit',
       modify: false,
-      stateRecArr: recipeArray.slice(0),
+      stateRecipeArray: recipeArray.slice(0),
       disableBtns: false,
     });
   });
@@ -56,19 +56,19 @@ describe('rootReducer', () => {
       currentRecipe: recipeArray.length > 0 ? recipeArray[0].Name : '',
       editOrAdd: 'add',
       modify: true,
-      stateRecArr: recipeArray.slice(0),
+      stateRecipeArray: recipeArray.slice(0),
       disableBtns: false,
     });
   });
   it('should handle REC_ARR', () => {
     const recArr = ['More recipes more problems'];
-    const action = { type: REC_ARR, item: recArr };
+    const action = { type: STATE_REC_ARR, item: recArr };
     expect(rootReducer(undefined, action)).toEqual({
       listItems: recipeArray.length > 0 ? recipeArray.map(item => item.Name) : [],
       currentRecipe: recipeArray.length > 0 ? recipeArray[0].Name : '',
       editOrAdd: 'add',
       modify: false,
-      stateRecArr: recArr,
+      stateRecipeArray: recArr,
       disableBtns: false,
     });
   });
@@ -80,7 +80,7 @@ describe('rootReducer', () => {
       currentRecipe: recipeArray.length > 0 ? recipeArray[0].Name : '',
       editOrAdd: 'add',
       modify: false,
-      stateRecArr: recipeArray.slice(0),
+      stateRecipeArray: recipeArray.slice(0),
       disableBtns: disableButtons,
     });
   });
