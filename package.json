@@ -1,5 +1,5 @@
 {
-  "name": "recipeBox",
+  "name": "recipe_box",
   "version": "1.0.0",
   "description": "A Recipe Box App",
   "main": "src/index.js",
